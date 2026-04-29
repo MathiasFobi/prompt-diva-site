@@ -5,1035 +5,331 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prompt Diva™ — Where Clarity Meets Execution</title>
   <meta name="description" content="AI-powered content systems for creators and teams who are done with confusion—and ready for clarity that actually works.">
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    :root {
-      --bg-deep: #07090D;
-      --bg-dark: #0D1117;
-      --bg-card: #111827;
-      --gold: #D4AF37;
-      --gold-light: #F5D76E;
-      --text: #F8F9FA;
-      --muted: #8B95A5;
-      --glow: rgba(212, 175, 55, 0.15);
-      --glow-strong: rgba(212, 175, 55, 0.3);
-    }
-    
-    html { scroll-behavior: smooth; }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-deep);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    
-    /* Utility */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    .gold-text { color: var(--gold); }
-    
-    /* Navigation */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      padding: 20px 0;
-      transition: all 0.3s ease;
-    }
-    
-    .nav.scrolled {
-      background: rgba(7, 9, 13, 0.95);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-    }
-    
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: var(--gold);
-      text-decoration: none;
-      font-weight: 700;
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-    
-    .nav-links a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    
-    .nav-links a:hover { color: var(--gold); }
-    
-    .nav-cta {
-      background: var(--gold);
-      color: var(--bg-deep);
-      padding: 10px 24px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-    }
-    
-    .nav-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
-    
-    .nav-mobile-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 10px;
-    }
-    
-    .nav-mobile-toggle span {
-      width: 24px;
-      height: 2px;
-      background: var(--text);
-      transition: all 0.3s;
-    }
-    
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding: 120px 0 80px;
-    }
-    
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(ellipse at 70% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 80%, rgba(13, 17, 23, 0.8) 0%, transparent 50%),
-        var(--bg-deep);
-    }
-    
-    .hero-stars {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
-        radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.2), transparent),
-        radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.3), transparent);
-      background-size: 200px 200px;
-      animation: twinkle 8s ease-in-out infinite;
-    }
-    
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
-    
-    .hero-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .hero-text { animation: fadeUp 1s ease-out 0.2s both; }
-    
-    .hero-label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--gold);
-      margin-bottom: 16px;
-    }
-    
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      color: var(--text);
-    }
-    
-    .hero-sub {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 480px;
-      margin-bottom: 40px;
-      line-height: 1.7;
-    }
-    
-    .hero-ctas {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    
-    .btn-primary {
-      background: var(--gold);
-      color: var(--bg-deep);
-      padding: 16px 36px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.3s;
-      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.3);
-    }
-    
-    .btn-primary:hover {
-      background: var(--gold-light);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4);
-    }
-    
-    .btn-secondary {
-      background: transparent;
-      color: var(--gold);
-      padding: 16px 36px;
-      border-radius: 50px;
-      border: 2px solid var(--gold);
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.3s;
-    }
-    
-    .btn-secondary:hover {
-      background: var(--gold);
-      color: var(--bg-deep);
-    }
-    
-    .hero-image {
-      position: relative;
-      animation: fadeUp 1s ease-out 0.4s both;
-    }
-    
-    .hero-image img {
-      width: 100%;
-      max-width: 500px;
-      border-radius: 20px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-    }
-    
-    .hero-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
-      animation: pulse 4s ease-in-out infinite;
-      pointer-events: none;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
-    }
-    
-    /* Floating UI panels */
-    .floating-panel {
-      position: absolute;
-      background: rgba(17, 24, 39, 0.8);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 12px;
-      padding: 16px;
-      backdrop-filter: blur(10px);
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    .floating-panel.p1 { top: 10%; right: -10%; animation-delay: 0s; }
-    .floating-panel.p2 { bottom: 20%; right: 5%; animation-delay: 2s; }
-    .floating-panel.p3 { top: 40%; left: -5%; animation-delay: 4s; }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-    
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* Sections */
-    section { padding: 100px 0; position: relative; }
-    
-    .section-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      margin-bottom: 20px;
-      line-height: 1.2;
-    }
-    
-    .section-sub {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 60px;
-      text-align: center;
-    }
-    
-    /* Problem Section */
-    .problem {
-      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
-      text-align: center;
-    }
-    
-    .problem-quote {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-style: italic;
-      color: var(--text);
-      max-width: 800px;
-      margin: 0 auto 40px;
-      line-height: 1.4;
-    }
-    
-    .problem-quote span { color: var(--gold); }
-    
-    .problem-sub {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    /* Solution Section */
-    .solution {
-      background: var(--bg-dark);
-    }
-    
-    .solution-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    
-    .solution-image {
-      position: relative;
-    }
-    
-    .solution-image img {
-      width: 100%;
-      border-radius: 20px;
-      border: 2px solid rgba(212, 175, 55, 0.2);
-    }
-    
-    .solution-content { animation: fadeUp 0.8s ease-out both; }
-    
-    .solution-content h2 { margin-bottom: 24px; }
-    
-    .solution-content p {
-      color: var(--muted);
-      margin-bottom: 20px;
-      font-size: 1.05rem;
-      line-height: 1.8;
-    }
-    
-    /* About Section */
-    .about {
-      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-deep) 100%);
-      text-align: center;
-    }
-    
-    .about-image {
-      width: 280px;
-      height: 280px;
-      margin: 0 auto 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid var(--gold);
-      box-shadow: 0 0 60px rgba(212, 175, 55, 0.2);
-    }
-    
-    .about-image img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .about-author {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
-    
-    .about-role {
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    
-    .about-quote {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-style: italic;
-      color: var(--text);
-      max-width: 700px;
-      margin: 0 auto 40px;
-      line-height: 1.6;
-    }
-    
-    /* Services Section */
-    .services {
-      background: var(--bg-deep);
-    }
-    
-    .services-header { text-align: center; margin-bottom: 60px; }
-    
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .service-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(212, 175, 55, 0.15);
-      border-radius: 20px;
-      padding: 40px;
-      transition: all 0.3s;
-    }
-    
-    .service-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 0 40px var(--glow);
-      transform: translateY(-5px);
-    }
-    
-    .service-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      display: block;
-    }
-    
-    .service-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    
-    .service-card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 24px;
-      line-height: 1.7;
-    }
-    
-    .service-card a {
-      color: var(--gold);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .service-card a:hover { color: var(--gold-light); }
-    
-    /* Process Section */
-    .process {
-      background: var(--bg-dark);
-    }
-    
-    .process-header { text-align: center; margin-bottom: 60px; }
-    
-    .process-steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-    }
-    
-    .process-step {
-      text-align: center;
-      position: relative;
-    }
-    
-    .process-step::after {
-      content: '';
-      position: absolute;
-      top: 40px;
-      right: -15px;
-      width: 30px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-    }
-    
-    .process-step:last-child::after { display: none; }
-    
-    .step-number {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: var(--bg-deep);
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.3);
-    }
-    
-    .process-step h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    
-    .process-step p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    
-    /* Work Together Section */
-    .work {
-      background: var(--bg-deep);
-    }
-    
-    .work-header { text-align: center; margin-bottom: 60px; }
-    
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-    
-    .work-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(212, 175, 55, 0.1);
-      border-radius: 16px;
-      padding: 32px;
-      text-align: center;
-      transition: all 0.3s;
-    }
-    
-    .work-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-3px);
-    }
-    
-    .work-card .work-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
-    
-    .work-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    
-    .work-card p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-    
-    .work-card a {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--bg-deep);
-      padding: 12px 28px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-    }
-    
-    .work-card a:hover { background: var(--gold-light); }
-    
-    /* Philosophy Section */
-    .philosophy {
-      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-card) 100%);
-      text-align: center;
-      padding: 120px 0;
-    }
-    
-    .philosophy::before {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 3px;
-      background: var(--gold);
-      margin: 0 auto 40px;
-    }
-    
-    .philosophy blockquote {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-style: italic;
-      color: var(--text);
-      max-width: 900px;
-      margin: 0 auto;
-      line-height: 1.5;
-    }
-    
-    /* Final CTA */
-    .final-cta {
-      background: var(--bg-card);
-      text-align: center;
-      padding: 120px 0;
-    }
-    
-    .final-cta h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-    
-    .final-cta p {
-      color: var(--muted);
-      font-size: 1.1rem;
-      margin-bottom: 40px;
-    }
-    
-    .final-cta-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    
-    /* Footer */
-    footer {
-      background: var(--bg-deep);
-      padding: 80px 0 40px;
-      border-top: 1px solid rgba(212, 175, 55, 0.1);
-    }
-    
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 60px;
-      margin-bottom: 60px;
-    }
-    
-    .footer-brand .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    
-    .footer-brand .footer-tagline {
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 16px;
-    }
-    
-    .footer-brand .footer-brand-line {
-      font-size: 0.8rem;
-      color: var(--muted);
-      opacity: 0.7;
-    }
-    
-    .footer-col h4 {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-    
-    .footer-col ul { list-style: none; }
-    
-    .footer-col li { margin-bottom: 12px; }
-    
-    .footer-col a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.3s;
-    }
-    
-    .footer-col a:hover { color: var(--gold); }
-    
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 32px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    
-    /* Scroll Animation */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease;
-    }
-    
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* Mobile */
-    @media (max-width: 968px) {
-      .nav-links { display: none; }
-      .nav-mobile-toggle { display: flex; }
-      .hero-content { grid-template-columns: 1fr; text-align: center; }
-      .hero-text { order: 2; }
-      .hero-image { order: 1; margin-bottom: 40px; }
-      .hero-image img { max-width: 350px; margin: 0 auto; }
-      .hero-sub { margin: 0 auto 40px; }
-      .hero-ctas { justify-content: center; }
-      .solution-grid { grid-template-columns: 1fr; gap: 40px; }
-      .process-steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
-      .process-step::after { display: none; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-    }
-    
-    @media (max-width: 600px) {
-      section { padding: 60px 0; }
-      .hero { padding: 100px 0 60px; }
-      .process-steps { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
-  <!-- Navigation -->
-  <nav class="nav" id="nav">
-    <div class="container nav-inner">
-      <a href="#" class="nav-logo">Prompt Diva™</a>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <a href="#contact" class="nav-cta">Work With Me</a>
-      <div class="nav-mobile-toggle" id="mobileToggle">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-  </nav>
-  
-  <!-- Hero -->
-  <section class="hero" id="home">
-    <div class="hero-bg">
-      <div class="hero-stars"></div>
-    </div>
-    <div class="container hero-content">
-      <div class="hero-text">
-        <p class="hero-label">AI-Powered Content Systems</p>
-        <h1>Command Your <span class="gold-text">Content Universe</span></h1>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">👑 Prompt Diva™</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="universe.html">Content Universe™</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="btn btn-primary nav-cta">Start With Strategy</a>
+  </div>
+</nav>
+
+<!-- HERO SECTION 1 -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content fade-up">
+        <span class="section-label">Content Universe™</span>
+        <h1>Command Your<br>Content Universe</h1>
         <p class="hero-sub">AI-powered content systems for creators and teams who are done with confusion—and ready for clarity that actually works.</p>
-        <p class="hero-sub" style="font-style: italic; color: var(--text);">Because content isn't the problem. Structure is.</p>
+        <p class="hero-sig">Because content isn't the problem. Structure is.</p>
         <div class="hero-ctas">
-          <a href="#contact" class="btn-primary">Enter the Universe ⚡</a>
-          <a href="#services" class="btn-secondary">Work With Prompt Diva™</a>
+          <a href="universe.html" class="btn btn-primary">Enter the Content Universe™</a>
+          <a href="contact.html" class="btn btn-secondary">Start With Strategy</a>
         </div>
       </div>
-      <div class="hero-image">
-        <div class="hero-glow"></div>
-        <img src="assets/hero.jpeg" alt="Prompt Diva™">
-        <div class="floating-panel p1">
-          <div style="font-size: 0.75rem; color: var(--gold);">Content Score</div>
-          <div style="font-size: 1.2rem; font-weight: 700; color: var(--text);">94/100</div>
-        </div>
-        <div class="floating-panel p2">
-          <div style="font-size: 0.75rem; color: var(--gold);">Universe Status</div>
-          <div style="font-size: 0.9rem; font-weight: 600; color: var(--text);">Active ✨</div>
-        </div>
-        <div class="floating-panel p3">
-          <div style="font-size: 0.75rem; color: var(--gold);">Next Milestone</div>
-          <div style="font-size: 0.85rem; color: var(--text);">Clarity ✓</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Problem Section -->
-  <section class="problem" id="problem">
-    <div class="container">
-      <p class="section-label reveal">The Problem</p>
-      <blockquote class="problem-quote reveal">
-        "Most brands are drowning in content —<br><span>but starving for structure.</span>"
-      </blockquote>
-      <p class="problem-sub reveal">
-        Scattered documents, conflicting AI outputs, and content that never quite lands? 
-        That's not a content problem. That's a systems problem.
-      </p>
-    </div>
-  </section>
-  
-  <!-- Solution Section -->
-  <section class="solution" id="solution">
-    <div class="container">
-      <div class="solution-grid">
-        <div class="solution-image reveal">
-          <img src="assets/diva-overlay.png" alt="Prompt Diva™">
-        </div>
-        <div class="solution-content">
-          <p class="section-label reveal">The Solution</p>
-          <h2 class="section-title reveal">Enter the <span class="gold-text">Content Universe</span></h2>
-          <p class="reveal">
-            Picture your content ecosystem as a living, breathing universe—where every piece of content has a home, 
-            every system connects, and every output reflects your brand's brilliance.
-          </p>
-          <p class="reveal">
-            As your <strong>Content Documentor</strong>, I'm the captain charting new courses—leading you to more 
-            structured, connected content environments where clarity lives.
-          </p>
-          <p class="reveal" style="color: var(--gold); font-weight: 600;">
-            No more content chaos. Just clarity that actually works.
-          </p>
+      <div class="hero-visual fade-up">
+        <div class="hero-image-wrapper">
+          <div class="hero-glow"></div>
+          <img src="assets/diva-overlay.png" alt="Prompt Diva™" class="hero-image">
+          <div class="floating-panel panel-1">
+            <span class="panel-label">Systems Active</span>
+            <span class="panel-value">7</span>
+          </div>
+          <div class="floating-panel panel-2">
+            <span class="panel-label">Clarity Score</span>
+            <span class="panel-value">94%</span>
+          </div>
+          <div class="floating-panel panel-3">
+            <span class="panel-label">Content Universe™</span>
+            <span class="panel-status">ONLINE</span>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-  
-  <!-- About Section -->
-  <section class="about" id="about">
-    <div class="container">
-      <p class="section-label reveal">About Prompt Diva™</p>
-      <div class="about-image reveal">
-        <img src="assets/hero.jpeg" alt="Prompt Diva™">
+  </div>
+  <div class="hero-particles"></div>
+</section>
+
+<!-- DIFFERENTIATOR SECTION 2 -->
+<section class="diff-section">
+  <div class="container">
+    <div class="diff-grid">
+      <div class="diff-content fade-up">
+        <span class="section-label">The Differentiator</span>
+        <h2>Not Just Content.<br>Content With <span class="gold-text">Command.</span></h2>
+        <p class="section-sub">Most creators are drowning in content—but starving for systems. We don't just create content. We build the infrastructure that makes content effortless, repeatable, and scalable.</p>
+        <ul class="diff-list">
+          <li>
+            <span class="diff-icon">◆</span>
+            <span>Structured frameworks over random inspiration</span>
+          </li>
+          <li>
+            <span class="diff-icon">◆</span>
+            <span>Repeatable systems over one-time outputs</span>
+          </li>
+          <li>
+            <span class="diff-icon">◆</span>
+            <span>Command-center thinking over content-as-usual</span>
+          </li>
+        </ul>
       </div>
-      <p class="about-author reveal">Martek Consulting</p>
-      <p class="about-role reveal">Content Strategist & AI Integration Expert</p>
-      <blockquote class="about-quote reveal">
-        "Good content isn't just about being correct...<br>it's about being understood."
-      </blockquote>
-    </div>
-  </section>
-  
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <div class="container">
-      <div class="services-header">
-        <p class="section-label reveal">What I Offer</p>
-        <h2 class="section-title reveal">Services Built for <span class="gold-text">Clarity</span></h2>
-        <p class="section-sub reveal">Whether you need a quick reset or a full transformation—there are multiple pathways to content clarity.</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card reveal">
-          <span class="service-icon">🎯</span>
-          <h3>1:1 Strategy Sessions</h3>
-          <p>Get direct, focused guidance on your content systems, AI approach, or workflow design. Perfect for founders and teams who need answers now.</p>
-          <a href="#contact">Book a Session →</a>
-        </div>
-        <div class="service-card reveal">
-          <span class="service-icon">📦</span>
-          <h3>Prompt Systems</h3>
-          <p>Plug-and-play prompt libraries and digital products designed to simplify your workflow and scale your content output without burnout.</p>
-          <a href="#contact">Explore Products →</a>
-        </div>
-        <div class="service-card reveal">
-          <span class="service-icon">👥</span>
-          <h3>Team Consulting</h3>
-          <p>Align your entire organization around content processes, tools, and systems that actually work for your team's size and structure.</p>
-          <a href="#contact">Schedule Call →</a>
+      <div class="diff-visual fade-up">
+        <div class="diff-visual-box">
+          <div class="dv-ring dv-ring-1"></div>
+          <div class="dv-ring dv-ring-2"></div>
+          <div class="dv-ring dv-ring-3"></div>
+          <div class="dv-center">CMD</div>
         </div>
       </div>
     </div>
-  </section>
-  
-  <!-- Process Section -->
-  <section class="process" id="process">
-    <div class="container">
-      <div class="process-header">
-        <p class="section-label reveal">The Journey</p>
-        <h2 class="section-title reveal">From Chaos to <span class="gold-text">Clarity</span></h2>
+  </div>
+</section>
+
+<!-- METHOD SECTION 3 -->
+<section class="method-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">The Prompt Diva™ Method</span>
+      <h2>Four Steps to Content <span class="gold-text">Command</span></h2>
+      <p class="section-sub" style="margin: 0 auto;">A proven system for transforming scattered content into a scalable, authoritative presence.</p>
+    </div>
+    <div class="method-grid">
+      <div class="method-card fade-up">
+        <span class="method-num">01</span>
+        <h3>Decode</h3>
+        <p>We dissect your current content landscape to identify exactly what's working, what's not, and what's missing from your content ecosystem.</p>
       </div>
-      <div class="process-steps">
-        <div class="process-step reveal">
-          <div class="step-number">1</div>
-          <h4>Audit</h4>
-          <p>Map your existing content landscape and identify the gaps</p>
+      <div class="method-card fade-up">
+        <span class="method-num">02</span>
+        <h3>Structure</h3>
+        <p>We architect a custom framework that turns your content into a cohesive system—each piece building on the last toward your goals.</p>
+      </div>
+      <div class="method-card fade-up">
+        <span class="method-num">03</span>
+        <h3>Amplify</h3>
+        <p>We deploy strategic amplification systems that multiply your content's reach and impact without multiplying your workload.</p>
+      </div>
+      <div class="method-card fade-up">
+        <span class="method-num">04</span>
+        <h3>Deliver</h3>
+        <p>We ensure every piece of content lands with precision, consistency, and the authority your audience expects and deserves.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT UNIVERSE HUB SECTION 4 -->
+<section class="universe-hub-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Content Universe™ Hub</span>
+      <h2>Your Content. <span class="gold-text">All Systems.</span></h2>
+      <p class="section-sub" style="margin: 0 auto;">Seven proprietary systems designed to transform how you create, structure, and amplify content.</p>
+    </div>
+    <div class="universe-grid">
+      <a href="universe.html#command" class="system-card fade-up">
+        <span class="system-badge">System 01</span>
+        <h3>The Command System™</h3>
+        <p>Master the art of directing AI to produce exactly what you envision—every time.</p>
+        <span class="system-cta">Step Inside →</span>
+      </a>
+      <a href="universe.html#authority" class="system-card fade-up">
+        <span class="system-badge">System 02</span>
+        <h3>The Authority Profile™</h3>
+        <p>Build a recognizable, authoritative presence that magnetizes your ideal audience.</p>
+        <span class="system-cta">Step Inside →</span>
+      </a>
+      <a href="universe.html#structure" class="system-card fade-up">
+        <span class="system-badge">System 03</span>
+        <h3>The Structure Framework™</h3>
+        <p>Transform scattered content into a cohesive, scalable content machine.</p>
+        <span class="system-cta">Step Inside →</span>
+      </a>
+      <a href="universe.html#builder" class="system-card fade-up">
+        <span class="system-badge">System 04</span>
+        <h3>Content Universe™ Build</h3>
+        <p>A complete content ecosystem designed for your specific business goals.</p>
+        <span class="system-cta">Step Inside →</span>
+      </a>
+      <a href="universe.html#workflow" class="system-card fade-up">
+        <span class="system-badge">System 05</span>
+        <h3>The Workflow Engine™</h3>
+        <p>Automated workflows that turn content creation from chaos into command.</p>
+        <span class="system-cta">Step Inside →</span>
+      </a>
+      <a href="universe.html#culture" class="system-card fade-up">
+        <span class="system-badge">System 06</span>
+        <h3>The Culture & Community Suite™</h3>
+        <p>Build a community around your content that amplifies every piece you create.</p>
+        <span class="system-cta">Step Inside →</span>
+      </a>
+    </div>
+    <div class="universe-cta fade-up">
+      <a href="universe.html" class="btn btn-secondary">Explore All Systems</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PARTNERS SECTION 5 -->
+<section class="partners-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Featured Partners</span>
+      <h2>Trusted by <span class="gold-text">Forward-Thinking</span> Brands</h2>
+    </div>
+    <div class="partners-grid fade-up">
+      <div class="partner-card">Partner Logo</div>
+      <div class="partner-card">Partner Logo</div>
+      <div class="partner-card">Partner Logo</div>
+      <div class="partner-card">Partner Logo</div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES SECTION 6 -->
+<section class="success-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Success Stories</span>
+      <h2>Results That <span class="gold-text">Speak</span></h2>
+      <p class="section-sub" style="margin: 0 auto;">Real transformations from creators and teams who made the shift from content confusion to content command.</p>
+    </div>
+    <div class="success-grid">
+      <div class="success-card fade-up">
+        <p class="success-quote">"Prompt Diva™ didn't just help me create content—they helped me understand why my content wasn't working. Now every piece has purpose."</p>
+        <div class="success-author">
+          <span class="author-name">Sarah M.</span>
+          <span class="author-title">Content Strategist</span>
         </div>
-        <div class="process-step reveal">
-          <div class="step-number">2</div>
-          <h4>Design</h4>
-          <p>Build a content architecture that actually supports your goals</p>
+      </div>
+      <div class="success-card fade-up">
+        <p class="success-quote">"The Command System™ alone was worth the investment. I went from struggling with AI to actually mastering it. Game changer."</p>
+        <div class="success-author">
+          <span class="author-name">Marcus J.</span>
+          <span class="author-title">Founder, Tech Startup</span>
         </div>
-        <div class="process-step reveal">
-          <div class="step-number">3</div>
-          <h4>Implement</h4>
-          <p>Integrate AI tools and systems that scale with your needs</p>
-        </div>
-        <div class="process-step reveal">
-          <div class="step-number">4</div>
-          <h4>Optimize</h4>
-          <p>Refine, iterate, and keep your content engine running smooth</p>
+      </div>
+      <div class="success-card fade-up">
+        <p class="success-quote">"Finally, a content system that actually works. My content calendar went from overwhelming to organized in weeks."</p>
+        <div class="success-author">
+          <span class="author-name">Lena K.</span>
+          <span class="author-title">Brand Manager</span>
         </div>
       </div>
     </div>
-  </section>
-  
-  <!-- Work Together Section -->
-  <section class="work" id="work">
-    <div class="container">
-      <div class="work-header">
-        <p class="section-label reveal">Let's Build</p>
-        <h2 class="section-title reveal">Ways to <span class="gold-text">Work Together</span></h2>
-      </div>
-      <div class="work-grid">
-        <div class="work-card reveal">
-          <span class="work-icon">💎</span>
-          <h3>1:1 Strategy Sessions</h3>
-          <p>Direct, focused guidance on your content, systems, or AI approach.</p>
-          <a href="#contact">Get Started</a>
-        </div>
-        <div class="work-card reveal">
-          <span class="work-icon">📚</span>
-          <h3>Prompt Systems</h3>
-          <p>Digital products designed to simplify and scale your workflow.</p>
-          <a href="#contact">Browse Products</a>
-        </div>
-        <div class="work-card reveal">
-          <span class="work-icon">🏢</span>
-          <h3>Consulting for Teams</h3>
-          <p>Align your content, processes, and tools across your organization.</p>
-          <a href="#contact">Book a Call</a>
-        </div>
-        <div class="work-card reveal">
-          <span class="work-icon">🎤</span>
-          <h3>Speaking & Training</h3>
-          <p>Bring Prompt Diva™ into the room and watch clarity click.</p>
-          <a href="#contact">Inquire</a>
+  </div>
+</section>
+
+<!-- STRATEGY FORM SECTION 7 -->
+<section class="strategy-section" id="strategy">
+  <div class="container">
+    <div class="strategy-grid">
+      <div class="strategy-content fade-up">
+        <span class="section-label">Start With Strategy</span>
+        <h2>Ready to Command<br>Your Content <span class="gold-text">Universe?</span></h2>
+        <p class="section-sub">Every great content system starts with a conversation. Tell us where you are, and we'll show you where you could be.</p>
+        <div class="strategy-benefits">
+          <div class="benefit-item">
+            <span class="benefit-icon">✓</span>
+            <span>Free 30-minute strategy consultation</span>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-icon">✓</span>
+            <span>Custom content system assessment</span>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-icon">✓</span>
+            <span>Clear roadmap for content command</span>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  
-  <!-- Philosophy Section -->
-  <section class="philosophy" id="philosophy">
-    <div class="container">
-      <blockquote class="reveal">
-        "Good content isn't just about being correct...<br>it's about being understood."
-      </blockquote>
-    </div>
-  </section>
-  
-  <!-- Final CTA -->
-  <section class="final-cta" id="contact">
-    <div class="container">
-      <p class="section-label reveal">Ready?</p>
-      <h2 class="reveal">Stop Guessing. Start <span class="gold-text">Structuring.</span></h2>
-      <p class="reveal">Step into a new way of working—where your content is clear, connected, and built to perform.</p>
-      <div class="final-cta-buttons reveal">
-        <a href="#" class="btn-primary">Enter the Universe ⚡</a>
-        <a href="#" class="btn-secondary">Work With Prompt Diva™</a>
+      <div class="strategy-form-wrapper fade-up">
+        <form class="strategy-form" id="strategyForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Where are you now? Where do you want to be?</label>
+            <textarea id="message" name="message" placeholder="Tell us about your current content situation and what you're working toward..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Start With Strategy</button>
+        </form>
+        <div class="form-success" id="formSuccess" style="display: none;">
+          <div class="success-icon">👑</div>
+          <h3>Strategy Request Received</h3>
+          <p>We'll be in touch within 24 hours to schedule your consultation.</p>
+        </div>
       </div>
     </div>
-  </section>
-  
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="footer-logo">Prompt Diva™</div>
-          <p class="footer-tagline">Where clarity meets execution.</p>
-          <p class="footer-brand-line">A brand of Martekconsulting.ai</p>
-        </div>
-        <div class="footer-col">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#process">Process</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Services</h4>
-          <ul>
-            <li><a href="#">1:1 Sessions</a></li>
-            <li><a href="#">Prompt Systems</a></li>
-            <li><a href="#">Team Consulting</a></li>
-            <li><a href="#">Speaking</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Connect</h4>
-          <ul>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">LinkedIn</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Email</a></li>
-          </ul>
-        </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">👑 Prompt Diva™</div>
+        <p>Where clarity meets execution.</p>
       </div>
-      <div class="footer-bottom">
-        © 2026 Prompt Diva™ — A Brand of Martekconsulting.ai. All rights reserved.
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="universe.html">Content Universe™</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Systems</h4>
+        <ul>
+          <li><a href="universe.html#command">Command System™</a></li>
+          <li><a href="universe.html#authority">Authority Profile™</a></li>
+          <li><a href="universe.html#structure">Structure Framework™</a></li>
+          <li><a href="universe.html">View All →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://twitter.com/promptdiva" target="_blank">Twitter / X</a></li>
+          <li><a href="https://linkedin.com/company/promptdiva" target="_blank">LinkedIn</a></li>
+          <li><a href="contact.html">Start With Strategy</a></li>
+        </ul>
       </div>
     </div>
-  </footer>
-  
-  <script>
-    // Scroll nav
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 100) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    });
-    
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 100);
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    reveals.forEach(el => observer.observe(el));
-  </script>
+    <div class="footer-bottom">
+      <p>© 2026 Prompt Diva™ — A Martekconsulting Brand. All Rights Reserved.</p>
+      <p>Command Your Content Universe™</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
 </body>
 </html>
